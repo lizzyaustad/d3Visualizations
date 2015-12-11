@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<head>
+    <title>Reading Stats</title>
+    <link rel="shortcut icon" href="book.ico">
+
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <link rel="stylesheet">
+    <style>
+        html {
+            font: 10px sans-serif;
+        }
+        .chart div {
+          background-color: steelblue;
+          text-align: right;
+          padding: 3px;
+          margin: 1px;
+          color: white;
+            margin-left: 300px;
+
+        }
+        svg {
+            margin-left: 400px;
+        }
+        h1 {
+            font-size: 50px;
+        }
+        h4 {
+            font-size: 15px;
+        }
+        p {
+            font-size: 14px;
+            margin: auto;
+            text-align: center;
+        }
+        a {
+            color: steelblue;
+        }
+        
+    </style>
+</head>
+<body>
+    <br><center>
+    <h1>Reading Statistics</h1>
+    <h4>Average number of minutes spent reading for pleasure by age</h4>
+    </center><br><br>
+    
+   
+    <center><p>Bar Graph</p></center>
+    
+    <br>
+    
+    
+<div class = "chart"></div>
+<br><br><br><br><br>
+    <center><p>Circles</p></center>
+<svg width="720" height="120">
+  <circle cx="50" cy="60" r="10"></circle>
+  <circle cx="150" cy="60" r="10"></circle>
+  <circle cx="250" cy="60" r="10"></circle>
+  <circle cx="350" cy="60" r="10"></circle>
+  <circle cx="450" cy="60" r="10"></circle>
+</svg>
+    <br><br><br><br><br><br><br><br>
+    <p>Data taken from <a href="https://www.commonsensemedia.org/research/children-teens-and-reading">Common Sense Media</a></p>
+<script>
+    var data = ["75","86","69","75","76"];
+    
+    var x = d3.scale.linear()
+          .domain([0, d3.max(data)])
+          .range([0, 420]);
+        
+    var i = 0;
+       d3.select(".chart")
+          .selectAll("div")
+            .data(data)
+          .enter().append("div")
+            .style("width",function(d) {return d*10 + "px"; })
+            .text(function(d) {var ans= i+"-"+(i+2)+": "+d; i+=3;  if (i==12) {ans = "9-12: "+d}; if (i==15) {ans = "average: "+d}; return ans; })
+    
+    
+    function changeValues() {
+        
+        for (var i=1; i<=3; i++) {
+            var n = document.getElementById(i).value;
+            data[i-1] = n;
+            document.getElementById(i).value = n;
+        }
+        
+        var x = d3.scale.linear()
+          .domain([0, d3.max(data)])
+          .range([0, 420]);
+        
+        d3.select(".chart")
+        .selectAll("div")
+          .data(data)
+        .enter().append("div")
+          .style("width",function(d) {return d*10 + "px"; })
+          .text(function(d) {return d; })
+    }
+   
+    
+    d3.select("body")
+        .style("background-color", "white");
+    
+    var circle = d3.selectAll("circle")
+      circle.style("fill", "steelblue");
+      circle.data([75,86,69,75,76]);
+      circle.attr("r", function(d) { return (d/2); }); 
+   
+
+    
+</script>
+</body>
+</html>
